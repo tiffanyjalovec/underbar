@@ -61,6 +61,7 @@
     }
   };
 
+
   // Returns the index at which value can be found in the array, or -1 if value
   // is not present in the array.
   _.indexOf = function(array, target){
@@ -105,15 +106,22 @@
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     var results = [];
+    /*
     var theSet = new Set();
     for(var i = 0; i < array.length; i ++){
-    theSet.add(array[i]);
-  }
+      theSet.add(array[i]);
+    }
     theSet.forEach(function(value){
       results.push(value);
-  });
-  return results;
-};
+    });
+    */
+    _.each(array, function(item){
+      if(!results.includes(item)){
+        results.push(item);
+      }
+    });
+    return results;
+  };
 
 
   // Return the results of applying an iterator to each element.
@@ -122,9 +130,9 @@
     // like each(), but in addition to running the operation on all
     // the members, it also maintains an array of results.
     var newArray =[];
-    for (var i = 0; i < collection.length; i++){
-      newArray.push(iterator(collection[i]));
-    }
+     for (var i = 0; i < collection.length; i++){
+       newArray.push(iterator(collection[i]));
+     }
     return newArray;
   };
 
