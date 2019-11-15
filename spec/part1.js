@@ -395,8 +395,7 @@
       });
 
       it('should apply a function to every value in an array', function() {
-        var numbers = [1, 2, 3];
-        var doubledNumbers = _.map(numbers, function(num) {
+        var doubledNumbers = _.map([1, 2, 3], function(num) {
           return num * 2;
         });
 
