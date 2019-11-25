@@ -364,7 +364,7 @@
   // http://mdn.io/Array.prototype.slice
   _.shuffle = function(array) {
     var shuffled = [];
-    var arrayCopy = Array.slice(array);
+    var arrayCopy = Array.prototype.slice.call(array);
 
     var results = [];
 
