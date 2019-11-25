@@ -32,7 +32,10 @@
   // Return an array of the first n elements of an array. If n is undefined,
   // return just the first element.
   _.first = function(array, n) {
-    return n === undefined ? array[0] : array.slice(0, n);
+    if(n === undefined){
+    return array[0];
+   }
+  return array.splice(0, n);
   };
 
   // Like first, but for the last elements. If n is undefined, return just the
@@ -41,8 +44,14 @@
     if(n === 0){
       return [];
     }
-    return n === undefined ? array[array.length-1] : array.slice(-n);
-  };
+    if ( n > array.length){
+      return array;
+    }
+    if(n === undefined){
+      return array[array.length-1];
+     }
+      return array.slice(n - 1);
+   };
 
   // Call iterator(value, key, collection) for each element of collection.
   // Accepts both arrays and objects.
@@ -70,8 +79,8 @@
     // it uses the iteration helper `each`, which you will need to write.
     var result = -1;
 
-    _.each(array, function(item, index) {
-      if (item === target && result === -1) {
+    _.each(array, function(value, index) {
+      if (value === target && result === -1) {
         result = index;
       }
     });
@@ -106,18 +115,9 @@
   // Produce a duplicate-free version of the array.
   _.uniq = function(array, isSorted, iterator) {
     var results = [];
-    /*
-    var theSet = new Set();
-    for(var i = 0; i < array.length; i ++){
-      theSet.add(array[i]);
-    }
-    theSet.forEach(function(value){
-      results.push(value);
-    });
-    */
-    _.each(array, function(item){
-      if(!results.includes(item)){
-        results.push(item);
+    _.each(array, function(value){
+      if(!results.includes(value)){
+        results.push(value);
       }
     });
     return results;
@@ -131,10 +131,15 @@
     // the members, it also maintains an array of results.
     //var newArray =[];
      //for (var i = 0; i < collection.length; i++){
-     var newArray = [];
-      _.each(collection, function(item) {
-        newArray.push(iterator(item));
-      });
+    var newArray = [];
+     _.each(collection, function(value){
+   	   var result = iterator(value);
+   	   newArray.push(result);
+     })
+   // for(var i = 0; i < collection.length; i++){
+   //   var result = iterator(collection[i]);
+   //   newArray.push(result);
+   //  }
     return newArray;
   };
 
@@ -179,8 +184,8 @@
   _.reduce = function(collection, iterator, accumulator) {
     //accumulator = accumulator || collection[0];
      if (accumulator === undefined){
-       accumulator = collection[0]
-       collection = Array.prototype.slice.call(collection, 1)
+       accumulator = collection[0];
+       collection = Array.prototype.slice.call(collection, 1);
        _.each(collection, function(ele){
          accumulator = iterator(accumulator, ele)
        });
